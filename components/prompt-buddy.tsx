@@ -14,20 +14,18 @@ import { Sparkles } from "lucide-react";
 const challengeAreas = [
   "Design a system architecture",
   "Database Optimization",
-  "API Development",
   "Debugging a complex technical issue",
   "Backend Architecture",
   "Cross Team Collaboration",
   "Conflict Resolution",
   "Problem Solving",
   "Decision Making",
-  "Leadership",
   "Productivity",
 ]
 
 // Add a light blue theme style
 const lightBlueTheme = {
-    backgroundColor: '#e0f7fa', // Light blue background
+    backgroundColor: '#6495ED', // Light blue background
     color: '#00796b', // Darker blue text
 };
 
@@ -59,7 +57,9 @@ export function PromptBuddyComponent() {
       const response = await generateText({
         model: groq('llama3-groq-70b-8192-tool-use-preview'),
         /*model: groq('llama3-8b-8192'),*/
-        messages: [{ role: "user", content: prompt }],
+        messages: [
+          {role: "system", content: "You are a helpful assistant with meta-prompting capabilities"}, 
+          { role: "user", content: prompt }],
       });
 
       setGeneratedPrompts(response.text)
@@ -71,9 +71,9 @@ export function PromptBuddyComponent() {
   }
 
   return (
-    <div style={lightBlueTheme} className="max-w-2xl mx-auto p-4 bg-gradient-to-br from-gray-900 to-gray-800 text-white p-8">
+    <div style={lightBlueTheme} className="max-w-3xl mx-auto p-4 bg-gradient-to-br from-gray-900 to-gray-800 text-white p-8">
       <h1 className="text-2xl font-bold mb-4">
-      <Sparkles className="inline-block ml-2" />Prompt Buddy for Software Engineers<Sparkles className="inline-block ml-2" />
+      <Sparkles className="inline-block ml-2" /> Prompt Buddy for Software Engineers<Sparkles className="inline-block ml-2" />
       </h1>
       <form onSubmit={handlePromptGeneration} className="space-y-4">
         <div>
@@ -81,7 +81,7 @@ export function PromptBuddyComponent() {
             Challenge Area
           </label>
           <Select onValueChange={setSelectedArea} value={selectedArea}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full text-gray-200">
               <SelectValue placeholder="Select a challenge area" />
             </SelectTrigger>
             <SelectContent>
@@ -103,7 +103,7 @@ export function PromptBuddyComponent() {
             value={specificChallenge}
             onChange={(e) => setSpecificChallenge(e.target.value)}
             placeholder="Describe your specific challenge here..."
-            className="mt-1"
+            className="mt-1  text-gray-200"
           />
         </div>
         <Button type="submit" 
@@ -122,8 +122,8 @@ export function PromptBuddyComponent() {
       {generatedPrompts && (
         <div className="mt-8">
           <h2 className="text-xl font-semibold mb-2">Generated Prompts:</h2>
-          <div className="border rounded-md p-4">
-            <MDEditor.Markdown source={generatedPrompts} className="mt-1" />
+          <div className="border rounded-md p-1">
+            <MDEditor.Markdown source={generatedPrompts} className="mt-1 text-gray-700" />
           </div>
         </div>
       )}
