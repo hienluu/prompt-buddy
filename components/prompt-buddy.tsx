@@ -31,7 +31,7 @@ const dropdownOptions = [
 // Add a light blue theme style
 const lightBlueTheme = {
     backgroundColor: '#6495ED', // Light blue background
-    color: '#00796b', // Darker blue text
+    color: '#5dade2 ', // lighter blue text
 };
 
 // Apply the theme to your components
@@ -47,14 +47,14 @@ export function PromptBuddyComponent() {
     apiKey: process.env.GROQ_API_KEY,
   });
 
-  const systemPrompt = `You are an AI assistant designed to help software engineers formulate effective user prompts based on their specific 
-  challenges across all areas of software engineering. 
-  When given a high-level context and challenge, generate a list of prompts that encourage critical thinking 
-  and guide the engineer toward finding their own solutions. 
+  const systemPrompt = `You are an AI assistant with expertise in meta-prompting capabilities. 
+  You are tasked with providing assistance to software engineers formulate effective user prompts based on their specific 
+  challenges in software engineering domain. 
+  When given a high-level context and challenge, generate 2 prompts in markdown format. These prompts should guide software engineers 
+  through the problem-solving process, offering insights, strategies, and explanations that illuminate the path to the solution.
+  Focus on clarity, relevance, and promoting a deeper understanding of the issue without providing direct answers.
   Ensure your prompts cover relevant topics such as system design, programming, debugging, team collaboration, performance optimization, 
   security, and project management. 
-  Focus on clarity, relevance, and promoting a deeper understanding of the issue without providing direct answers.
-  Formatting: Use markdown features for readability.
   `
   const systemPrompt2 = `You are a helpful assistant with meta-prompting capabilities`
 
@@ -73,15 +73,11 @@ export function PromptBuddyComponent() {
     setError(null)
 
     const prompt = `
-       The context of the challenge is ${selectedArea}. 
-       The specific challenge is: ${specificChallenge}.
+       The context of the challenge in ${selectedArea} area.
+       The specific challenge is about ${specificChallenge}.
        Generate 2 prompts in markdown format, with the expected outpcomes.
        `
-    const prompt2 = `You are an expert prompt engineer.
-       I would like you to generate 2 prompts for a software engineer facing a challenge in ${selectedArea}. 
-       The specific challenge is about ${specificChallenge}.
-       Please provide the prompts in a markdown format, and make sure the prompts are specific to the challenge.       
-       `
+  
 
     try {
       const response = await generateText({
@@ -111,8 +107,8 @@ export function PromptBuddyComponent() {
             Topic
           </label>
           <Select onValueChange={setSelectedArea} value={selectedArea}>
-            <SelectTrigger className="w-full bg-gray-200 p-1">
-              <SelectValue placeholder="Select a challenge area" />
+            <SelectTrigger className="w-full bg-slate-100 p-1 text-indigo-900 text-sm">
+              <SelectValue placeholder="Select a challenge area"  />
             </SelectTrigger>
             <SelectContent>
               {challengeAreas.map((area) => (
@@ -127,17 +123,18 @@ export function PromptBuddyComponent() {
           <label htmlFor="challenge" className="block text-base font-bold text-gray-300">
             Describe your challenge
           </label>
-          <select value={selectedOption} onChange={handleDropdownChange} className="w-full p-1 text-md rounded bg-gray-200">
-          <option value="">Select an option</option>
-          {dropdownOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
+          <select value={selectedOption} onChange={handleDropdownChange} 
+            className="w-full p-2 bg-slate-100 text-indigo-900 rounded text-sm">
+            <option value="">Select an option</option>
+            {dropdownOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
         </select>
           <Textarea
             id="challenge"
-            rows={6}
+            rows={3}
             value={specificChallenge}
             onChange={(e) => setSpecificChallenge(e.target.value)}
             placeholder="Describe your specific challenge here..."
@@ -161,7 +158,7 @@ export function PromptBuddyComponent() {
         <div className="mt-8">
           <h2 className="mb-2 text-base font-bold text-gray-300">Generated Prompts:</h2>
           <div className="border rounded-md p-1">
-            <MDEditor.Markdown source={generatedPrompts} className="mt-1 text-gray-700" />
+            <MDEditor.Markdown source={generatedPrompts} className="mt-1 text-gray-700 bg-slate-300" />
           </div>
         </div>
       )}
