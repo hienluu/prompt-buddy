@@ -21,11 +21,11 @@ const challengeAreas = [
 ]
 
 const dropdownOptions = [
-  'transitioning from monolithic to microservices architecture',
-  'resolving merge conflicts in Git',
-  'optimize database query performance in PostgreSQL for handling large datasets',
-  'steps can we take to ensure smooth handoffs between development and QA teams',
-  'team members have different priorities or competing demands for limited resources'
+  'Transitioning from monolithic to microservices architecture',
+  'Resolving merge conflicts in Git',
+  'Optimize database query performance in PostgreSQL for handling large datasets',
+  'Steps can we take to ensure smooth handoffs between development and QA teams',
+  'Team members have different priorities or competing demands for limited resources'
 ];
 
 // Add a light blue theme style
@@ -47,7 +47,15 @@ export function PromptBuddyComponent() {
     apiKey: process.env.GROQ_API_KEY,
   });
 
-  const systemPrompt = `You are an AI assistant designed to help software engineers formulate effective user prompts based on their specific challenges across all areas of software engineering. When given a high-level context and challenge, generate a list of prompts that encourage critical thinking and guide the engineer toward finding their own solutions. Ensure your prompts cover relevant topics such as system design, programming, debugging, team collaboration, performance optimization, security, and project management. Focus on clarity, relevance, and promoting a deeper understanding of the issue without providing direct answers.`
+  const systemPrompt = `You are an AI assistant designed to help software engineers formulate effective user prompts based on their specific 
+  challenges across all areas of software engineering. 
+  When given a high-level context and challenge, generate a list of prompts that encourage critical thinking 
+  and guide the engineer toward finding their own solutions. 
+  Ensure your prompts cover relevant topics such as system design, programming, debugging, team collaboration, performance optimization, 
+  security, and project management. 
+  Focus on clarity, relevance, and promoting a deeper understanding of the issue without providing direct answers.
+  Formatting: Use markdown features for readability.
+  `
   const systemPrompt2 = `You are a helpful assistant with meta-prompting capabilities`
 
   const handleDropdownChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
