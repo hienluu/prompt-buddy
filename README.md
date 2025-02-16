@@ -2,6 +2,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+copy env-example .env
+add update the GROQ_API_KEY with key api key
+
 First, run the development server:
 
 ```bash
