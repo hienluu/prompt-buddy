@@ -28,6 +28,8 @@ const dropdownOptions = [
   'Team members have different priorities or competing demands for limited resources'
 ];
 
+// https://tailwindcss.com/docs/background-color
+
 // Add a light blue theme style
 const lightBlueTheme = {
     backgroundColor: '#6495ED', // Light blue background
@@ -47,14 +49,36 @@ export function PromptBuddyComponent() {
     apiKey: process.env.GROQ_API_KEY,
   });
 
-  const systemPrompt = `You are an AI assistant with expertise in meta-prompting capabilities. 
-  You are tasked with providing assistance to software engineers formulate effective user prompts based on their specific 
+  const systemPrompt = `
+You are an AI assistant with expertise in meta-prompting and a deep understanding of the software engineering domain. Your task is to assist software engineers—from beginners to advanced—in formulating effective and exploratory user prompts based on their specific challenges.
+
+When provided with a high-level context and a challenge (technical or non-technical), generate **2 prompts** in markdown format. Each prompt should be structured into the following sections:
+
+- **Problem Statement:** Clearly restate the challenge in general terms.
+- **Guiding Questions:** Pose questions that encourage the user to analyze and dissect the challenge without directly providing the solution.
+- **Exploratory Strategies and Discussion Points:** Offer insights, strategies, and examples (e.g., code snippets, architecture diagrams) relevant to areas such as system design, programming, debugging, team collaboration, performance optimization, security, and project management.
+
+**Important Guidelines:**
+- **Tailor your responses** to the expertise level of the user (beginner, intermediate, or advanced) when such context is provided.
+- **Emphasize the process over direct answers,** promoting a step-by-step approach to problem-solving.
+- **Include relevant details or examples** wherever applicable to help illuminate the path to the solution.
+- **Adjust the depth and focus** of your guidance based on whether the challenge is primarily technical or non-technical.
+
+Your goal is to guide software engineers toward a deeper understanding of their challenges by fostering critical thinking and self-guided discovery.
+`
+
+  const systemPrompt1 = `You are an AI assistant with expertise in meta-prompting capabilities. 
+  You are tasked with providing assistance to software engineers to formulate effective user prompts based on their specific 
   challenges in software engineering domain. 
-  When given a high-level context and challenge, generate 2 prompts in markdown format. These prompts should guide software engineers 
-  through the problem-solving process, offering insights, strategies, and explanations that illuminate the path to the solution.
+  When given a high-level context and a challenge, generate 2 prompts in markdown format. 
+  When generating prompts, decompose the problem into smaller, actionable questions that guide engineers to isolate root causes, evaluate tradeoffs, or prioritize subsystems
+  The prompts should guide software engineers through the problem-solving process, offering insights, strategies, and explanations that illuminate the path to the solution.
+  The prompts should focus on facilitating a step-by-step analysis without revealing the complete solution, encouraging exploratory questioning.
   Focus on clarity, relevance, and promoting a deeper understanding of the issue without providing direct answers.
+  Include references or examples related to system design, programming, debugging, team collaboration, etc., when relevant.
+  Adapt the depth of your guidance based on whether the challenge is technical (e.g., performance optimization, security) or non-technical (e.g., project management, team collaboration).
   Ensure your prompts cover relevant topics such as system design, programming, debugging, team collaboration, performance optimization, 
-  security, and project management. 
+  security, and project management. Make the prompts are in markdown format
   `
   const systemPrompt2 = `You are a helpful assistant with meta-prompting capabilities`
 
@@ -81,7 +105,7 @@ export function PromptBuddyComponent() {
 
     try {
       const response = await generateText({
-        model: groq('llama3-groq-70b-8192-tool-use-preview'),
+        model: groq('llama-3.3-70b-versatile'),
         /*model: groq('llama3-8b-8192'),*/
         messages: [
           {role: "system", content: systemPrompt}, 
@@ -110,7 +134,7 @@ export function PromptBuddyComponent() {
             <SelectTrigger className="w-full bg-slate-100 p-1 text-indigo-900 text-sm">
               <SelectValue placeholder="Select a challenge area"  />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-slate-300">
               {challengeAreas.map((area) => (
                 <SelectItem key={area} value={area}>
                   {area}
